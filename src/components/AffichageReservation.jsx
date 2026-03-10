@@ -1,24 +1,25 @@
-const AffichageReservation = ({ salleId, jour, mois, annee, reservation }) => {
-  const jour_formate = String(jour).padStart(2, "0");
-  const mois_formate = String(mois).padStart(2, "0");
+import { useReservation } from "../Context/ReservationContext";
 
-  const dateStr = `${annee}-${mois_formate}-${jour_formate}`;
+const AffichageReservation = ({ salleId, jour, mois, annee }) => {
+  const { reservation } = useReservation();
+  const dateStr = `${annee}-${mois.toString().padStart(2, "0")}-${jour.toString().padStart(2, "0")}`;
   const res = reservation.find(
     (r) => r.salleId === salleId && r.date === dateStr,
   );
-  if (!res) {
-    return (
-      <div>
-        <span className="mat">M</span> / <span className="apr">A</span>
-      </div>
-    );
-  }
+  if (!res) return <>-</>;
   return (
-    <div>
-      <span className={res.resamatin ? "mat" : "mat-reserve"}>M</span> /{" "}
-      <span className={res.resaprem ? "apr" : "apr-reserve"}>A</span>
-    </div>
+    <>
+      {res.resamatin ? (
+        <span style={{ color: "green" }}>M</span>
+      ) : (
+        <span style={{ color: "red" }}>M</span>
+      )}
+      {res.resaprem ? (
+        <span style={{ color: "green" }}>A</span>
+      ) : (
+        <span style={{ color: "red" }}>A</span>
+      )}
+    </>
   );
 };
-
 export default AffichageReservation;

@@ -1,0 +1,680 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap");
+
+:root {
+  --bg: #fdf6ee;
+  --surface: #fffdf9;
+  --surface-2: #fef8f0;
+  --border: #f0e0c8;
+  --text: #2d1f0e;
+  --text-muted: #9c7c5a;
+  --accent: #c0392b;
+  --accent-light: #fdecea;
+  --green: #1e7e4a;
+  --green-light: #e8f7ef;
+  --red: #c0392b;
+  --red-light: #fdecea;
+  --admin: #3d4f8a;
+  --admin-light: #eef1fc;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+  --shadow-md: 0 4px 24px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "DM Sans", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+#root {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+/* ── Layout principal ── */
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Header du tableau ── */
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--border);
+}
+
+.app-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+
+.badge-role {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+.badge-role.admin {
+  background: var(--admin-light);
+  color: var(--admin);
+}
+.badge-role.user {
+  background: var(--green-light);
+  color: var(--green);
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+
+.card h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+
+.card h3 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+/* ── Deux colonnes ── */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 700px) {
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Formulaires ── */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 14px;
+}
+
+.form-group label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.form-group input,
+.form-group select {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.9rem;
+  padding: 9px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  color: var(--text);
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+  width: 100%;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--text);
+  box-shadow: 0 0 0 3px rgba(26, 23, 20, 0.06);
+}
+
+/* ── Boutons ── */
+.btn {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 9px 20px;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.01em;
+}
+.btn-primary {
+  background: var(--text);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: #333;
+  transform: translateY(-1px);
+}
+
+.btn-danger {
+  background: var(--red-light);
+  color: var(--red);
+  border: 1px solid #f5c6c2;
+}
+.btn-danger:hover {
+  background: #f9d4d1;
+}
+
+.btn-admin {
+  background: var(--admin);
+  color: #fff;
+}
+.btn-admin:hover {
+  background: #233260;
+}
+
+.btn-sm {
+  padding: 6px 14px;
+  font-size: 0.78rem;
+}
+
+/* ── Login / Accueil ── */
+.login-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 16px;
+}
+
+.login-screen h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.login-choices {
+  display: flex;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.login-card {
+  width: 180px;
+  padding: 28px 20px;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.18s;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.login-card:hover {
+  border-color: var(--text);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+.login-card .login-icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  display: block;
+}
+
+/* ── Login admin form ── */
+.login-form {
+  max-width: 320px;
+  margin: 60px auto;
+}
+
+/* ── Alert / Messages ── */
+.alert {
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+.alert-error {
+  background: var(--red-light);
+  color: var(--red);
+  border: 1px solid #f5c6c2;
+}
+.alert-success {
+  background: var(--green-light);
+  color: var(--green);
+  border: 1px solid #b8e0cc;
+}
+.alert-warning {
+  background: #fff8e1;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+/* ── Tableau ── */
+.tableau-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+
+.tableau-controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.tableau-controls h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+  flex: 1;
+}
+
+.tableau-controls select {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.85rem;
+  padding: 7px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow: auto;
+  max-height: 460px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.table-wrapper table {
+  width: max-content;
+  border-collapse: collapse;
+  font-family: "DM Mono", monospace;
+  font-size: 0.75rem;
+}
+
+.table-wrapper th,
+.table-wrapper td {
+  border: 1px solid var(--border);
+  padding: 5px 4px;
+  text-align: center;
+  min-width: 38px;
+}
+
+.table-wrapper thead th {
+  position: sticky;
+  top: 0;
+  background: #1a1714;
+  color: #fff;
+  z-index: 2;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 8px 4px;
+}
+
+.table-wrapper .col-salle {
+  position: sticky;
+  left: 0;
+  background: #1a1714;
+  color: #fff;
+  z-index: 3;
+  min-width: 130px;
+  text-align: left;
+  padding-left: 12px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.table-wrapper thead .col-salle {
+  z-index: 4;
+}
+
+.table-wrapper tbody tr:nth-child(even) td {
+  background: var(--surface-2);
+}
+.table-wrapper tbody tr:nth-child(even) .col-salle {
+  background: #1a1714;
+}
+
+/* cellule matin/aprem */
+.cell-slots {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: center;
+  padding: 2px;
+}
+
+.slot {
+  font-size: 0.65rem;
+  font-weight: 700;
+  font-family: "DM Sans", sans-serif;
+  padding: 1px 5px;
+  border-radius: 3px;
+  cursor: default;
+  letter-spacing: 0.03em;
+  width: 100%;
+  text-align: center;
+}
+
+.slot.libre {
+  background: var(--green-light);
+  color: var(--green);
+}
+
+.slot.reserve {
+  background: var(--red-light);
+  color: var(--red);
+  cursor: help;
+}
+
+/* ── Admin panel ── */
+.admin-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.section-block {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.section-block-header {
+  background: var(--surface-2);
+  padding: 12px 18px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.section-block-body {
+  padding: 18px;
+  background: var(--surface);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-end;
+}
+
+/* ── Utilisateur connect ── */
+.user-info-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+}
+
+.user-info-bar strong {
+  font-weight: 600;
+}
+.user-info-bar .logout-btn {
+  margin-left: auto;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  background: none;
+  border: 1px solid var(--border);
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-family: "DM Sans", sans-serif;
+  transition: all 0.15s;
+}
+.user-info-bar .logout-btn:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+/* divider */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 4px 0 16px;
+}
+
+/* ── Tablette (≤ 900px) ── */
+@media (max-width: 900px) {
+  #root {
+    padding: 20px 16px;
+  }
+
+  .card {
+    padding: 18px;
+  }
+
+  .app-header {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .app-header h1 {
+    font-size: 1.2rem;
+  }
+
+  .user-info-bar {
+    width: 100%;
+    margin-left: 0 !important;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .two-col {
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .section-block-body {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .login-form {
+    margin: 30px auto;
+  }
+}
+
+/* ── Mobile (≤ 600px) ── */
+@media (max-width: 600px) {
+  #root {
+    padding: 12px 10px;
+  }
+
+  .app-layout {
+    gap: 14px;
+  }
+
+  .card {
+    padding: 14px;
+    border-radius: 8px;
+  }
+
+  .app-header {
+    padding-bottom: 14px;
+    gap: 8px;
+  }
+  .app-header h1 {
+    font-size: 1.05rem;
+    flex: 1 1 100%;
+  }
+
+  .badge-role {
+    font-size: 0.65rem;
+  }
+
+  /* Login */
+  .login-screen {
+    min-height: 50vh;
+    gap: 12px;
+  }
+  .login-screen h2 {
+    font-size: 1.4rem;
+    text-align: center;
+  }
+  .login-choices {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+  .login-card {
+    width: 100%;
+    padding: 18px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-align: left;
+  }
+  .login-card .login-icon {
+    font-size: 1.6rem;
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+  .login-form {
+    margin: 20px auto;
+    max-width: 100%;
+  }
+
+  /* Formulaires */
+  .two-col {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .form-group input,
+  .form-group select {
+    font-size: 1rem;
+    padding: 11px 12px;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 0.9rem;
+  }
+  .btn-sm {
+    width: auto;
+    padding: 8px 14px;
+    font-size: 0.8rem;
+  }
+
+  /* Admin */
+  .section-block-header {
+    font-size: 0.75rem;
+    padding: 10px 14px;
+  }
+  .section-block-body {
+    padding: 14px;
+  }
+
+  /* User info bar */
+  .user-info-bar {
+    font-size: 0.8rem;
+    padding: 8px 12px;
+  }
+
+  .alert {
+    font-size: 0.82rem;
+  }
+
+  /* Tableau — navigation semaine */
+  .tableau-week-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    gap: 8px;
+  }
+  .tableau-week-nav button {
+    width: auto;
+    padding: 7px 14px;
+    font-size: 0.8rem;
+  }
+  .tableau-week-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-align: center;
+    flex: 1;
+  }
+
+  /* Tableau cellules */
+  .table-wrapper th,
+  .table-wrapper td {
+    min-width: 36px;
+    padding: 3px 1px;
+  }
+  .table-wrapper .col-salle {
+    min-width: 60px;
+    max-width: 60px;
+    font-size: 0.65rem;
+    padding-left: 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .slot {
+    font-size: 0.6rem;
+    padding: 1px 3px;
+  }
+
+  /* Table mobile : colonnes ultra-compactes pour tenir 7 jours + salle */
+  .table-wrapper table.mobile-table {
+    table-layout: fixed;
+    width: 100%;
+  }
+  .table-wrapper table.mobile-table th,
+  .table-wrapper table.mobile-table td {
+    min-width: unset;
+    width: calc((100% - 60px) / 7);
+    padding: 3px 1px;
+    overflow: hidden;
+  }
+  .table-wrapper table.mobile-table .col-salle {
+    width: 60px;
+    min-width: 60px;
+    max-width: 60px;
+  }
+}

@@ -1,100 +1,150 @@
 import { useState } from "react";
-import SalleSelect from "./SalleSelect";
-import DateInput from "./DateInput";
-import SlotSelector from "./SlotSelector";
-import UtilisateurSelect from "./UtilisateurSelect";
-import NewUtilisateur from "./NewUtilisateur";
+import { useReservation } from "../Context/ReservationContext";
 
-const ReservationForm = ({
-  salle,
-  setReservation,
-  reservation,
-  setUtilisateur,
-  utilisateur,
-}) => {
-  const [reservationForm, setreservationForm] = useState({
-    salleId: "",
-    date: "",
-    slot: "",
-    utilisateur: "",
-  });
+const ReservationForm = ({ utilisateur }) => {
+  const { salles, reservation, setReservation } = useReservation();
+
+  const [salleId, setSalleId] = useState(salles[0]?.id || "");
+  const [date, setDate] = useState("");
+  const [creneau, setCreneau] = useState("");
+  const [message, setMessage] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const reservationExistante = reservation.find(
-      (r) =>
-        r.date === reservationForm.date &&
-        r.salleId === parseInt(reservationForm.salleId) &&
-        ((reservationForm.slot === "matin" && r.resamatin) ||
-          (reservationForm.slot === "aprem" && r.resaprem)),
+    setMessage(null);
+
+    if (!salleId || !date || !creneau) {
+      setMessage({ type: "error", text: "Veuillez remplir tous les champs." });
+      return;
+    }
+
+    const existing = reservation.find(
+      (r) => r.salleId === parseInt(salleId) && r.date === date,
     );
 
-    if (reservationExistante) {
-      alert(
-        reservationForm.slot === "matin"
-          ? "Déjà réservé le matin !"
-          : "Déjà réservé l'après-midi !",
+    const resamatin = creneau === "matin" || creneau === "les-deux";
+    const resaprem = creneau === "aprem" || creneau === "les-deux";
+
+    if (existing) {
+      const conflitMatin = resamatin && !existing.resamatin;
+      const conflitAprem = resaprem && !existing.resaprem;
+
+      if (conflitMatin && conflitAprem) {
+        setMessage({
+          type: "error",
+          text: "❌ La salle est déjà réservée pour le matin et l'après-midi ce jour-là.",
+        });
+        return;
+      }
+      if (conflitMatin) {
+        setMessage({
+          type: "error",
+          text: "❌ La salle est déjà réservée pour le matin ce jour-là.",
+        });
+        return;
+      }
+      if (conflitAprem) {
+        setMessage({
+          type: "error",
+          text: "❌ La salle est déjà réservée pour l'après-midi ce jour-là.",
+        });
+        return;
+      }
+
+      setReservation(
+        reservation.map((r) =>
+          r.salleId === parseInt(salleId) && r.date === date
+            ? {
+                ...r,
+                resamatin: resamatin ? false : r.resamatin,
+                resaprem: resaprem ? false : r.resaprem,
+                utilisateurId: utilisateur.id,
+              }
+            : r,
+        ),
       );
-      return;
-    }
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const selectedDate = new Date(reservationForm.date);
-    if (selectedDate < today) {
-      alert("La date doit être la date du jour ou dans le futur !");
-      return;
+    } else {
+      const newResa = {
+        id: Date.now(),
+        salleId: parseInt(salleId),
+        utilisateurId: utilisateur.id,
+        date,
+        resamatin: !resamatin,
+        resaprem: !resaprem,
+      };
+      setReservation([...reservation, newResa]);
     }
 
-    setReservation((prev) => [
-      ...prev,
-      {
-        id: prev.length + 1,
-        salleId: parseInt(reservationForm.salleId),
-        date: reservationForm.date,
-        resamatin: reservationForm.slot === "matin",
-        resaprem: reservationForm.slot === "aprem",
-        utilisateurId: parseInt(reservationForm.utilisateur),
-      },
-    ]);
-
-    setreservationForm({ salleId: "", date: "", slot: "", utilisateur: "" });
+    setMessage({
+      type: "success",
+      text: `✅ Réservation ajoutée pour le ${date}.`,
+    });
+    setDate("");
+    setCreneau("");
   };
+
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <SalleSelect
-          salle={salle}
-          value={reservationForm.salleId}
-          onChange={(val) =>
-            setreservationForm({ ...reservationForm, salleId: val })
-          }
-        />
-        <DateInput
-          value={reservationForm.date}
-          onChange={(val) =>
-            setreservationForm({ ...reservationForm, date: val })
-          }
-        />
-        <SlotSelector
-          value={reservationForm.slot}
-          onChange={(val) =>
-            setreservationForm({ ...reservationForm, slot: val })
-          }
-        />
-        <UtilisateurSelect
-          utilisateur={utilisateur}
-          value={reservationForm.utilisateur}
-          onChange={(val) =>
-            setreservationForm({ ...reservationForm, utilisateur: val })
-          }
-        />
-
-        <div>
-          {" "}
-          <button type="submit">Valider</button>
+      <h2>Nouvelle réservation</h2>
+      {message && (
+        <div
+          className={`alert alert-${message.type === "error" ? "error" : "success"}`}
+        >
+          {message.text}
         </div>
+      )}
+      <form onSubmit={handleSubmit}>
+        <div className="two-col" style={{ maxWidth: 600 }}>
+          <div className="form-group">
+            <label>Salle</label>
+            <select
+              value={salleId}
+              onChange={(e) => setSalleId(e.target.value)}
+              required
+            >
+              <option value="">-- Choisir une salle --</option>
+              {salles.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="date">Date</label>
+            <input
+              type="date"
+              id="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Créneau</label>
+            <select
+              value={creneau}
+              onChange={(e) => setCreneau(e.target.value)}
+              required
+            >
+              <option value="">-- Choisir un créneau --</option>
+              <option value="matin">Matin</option>
+              <option value="aprem">Après-midi</option>
+              <option value="les-deux">Journée entière</option>
+            </select>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          className="btn btn-primary"
+          style={{ marginTop: 4 }}
+        >
+          Ajouter la réservation
+        </button>
       </form>
-      <NewUtilisateur setUtilisateur={setUtilisateur} />
     </div>
   );
 };

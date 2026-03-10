@@ -1,128 +1,104 @@
-import "./App.css";
-import { useState, useEffect } from "react";
+import "./styles/App.css";
+import { useState } from "react";
+import { ReservationProvider } from "./Context/ReservationContext";
 
-import Tableau from "./components/Tableau";
-import ReservationForm from "./reservation/ReservationForm";
+import LoginAdmin from "./Admin/LoginAdmin";
 import AdminPanel from "./Admin/AdminPanel";
+import NewUtilisateur from "./reservation/NewUtilisateur";
+import ReservationForm from "./reservation/ReservationForm";
+import Tableau from "./components/Tableau";
 
 function App() {
-  const [salles, setSalles] = useState(() => {
-    const savedsalles = localStorage.getItem("salles");
-    return savedsalles
-      ? JSON.parse(savedsalles)
-      : [
-          { id: 1, name: "salle 1" },
-          { id: 2, name: "salle 2" },
-        ];
-  });
+  const [userType, setUserType] = useState(null); // "admin" | "user"
+  const [adminLogged, setAdminLogged] = useState(false);
+  const [utilisateurConnecte, setUtilisateurConnecte] = useState(null); // objet {id, name, email}
 
-  const [reservation, setReservation] = useState(() => {
-    const savedresa = localStorage.getItem("reservation");
-    return savedresa
-      ? JSON.parse(savedresa)
-      : [
-          {
-            id: 1,
-            salleId: 1,
-            date: "2026-02-28",
-            resamatin: true,
-            resaprem: false,
-          },
-          {
-            id: 2,
-            salleId: 2,
-            date: "2026-02-21",
-            resamatin: true,
-            resaprem: false,
-          },
-        ];
-  });
+  const handleLogout = () => {
+    setUserType(null);
+    setAdminLogged(false);
+    setUtilisateurConnecte(null);
+  };
 
-  const [utilisateur, setUtilisateur] = useState(() => {
-    const saved = localStorage.getItem("utilisateur");
-    return saved
-      ? JSON.parse(saved)
-      : [
-          { id: 1, name: "SEB", email: "SEB@gmail.com" },
-          { id: 2, name: "SEBA", email: "SEB@gmail.com" },
-          { id: 3, name: "SEBAS", email: "SEB@gmail.com" },
-          { id: 4, name: "SEBAST", email: "SEB@gmail.com" },
-        ];
-  });
-  useEffect(() => {
-    localStorage.setItem("utilisateur", JSON.stringify(utilisateur));
-  }, [utilisateur]);
-
-  useEffect(() => {
-    localStorage.setItem("salles", JSON.stringify(salles));
-  }, [salles]);
-
-  useEffect(() => {
-    localStorage.setItem("reservation", JSON.stringify(reservation));
-  }, [reservation]);
   return (
-    <div style={{ padding: "20px" }}>
-      <h1
-        style={{
-          textAlign: "center",
-          marginBottom: "20px",
-          backgroundColor: "#ddd",
-          padding: "10px",
-          borderRadius: "8px",
-        }}
-      >
-        Réservation de salles
-      </h1>
+    <ReservationProvider>
+      <div className="app-layout">
+        {!userType && (
+          <div className="login-screen">
+            <h2>Réservation de salles</h2>
+            <p style={{ color: "var(--text-muted)", fontSize: "0.9rem" }}>
+              Choisissez votre profil pour continuer
+            </p>
+            <div className="login-choices">
+              <div className="login-card" onClick={() => setUserType("admin")}>
+                <span className="login-icon">🔐</span>
+                Administrateur
+              </div>
+              <div className="login-card" onClick={() => setUserType("user")}>
+                <span className="login-icon">👤</span>
+                Utilisateur
+              </div>
+            </div>
+          </div>
+        )}
+        {userType === "admin" && !adminLogged && (
+          <LoginAdmin setAdminLogged={setAdminLogged} onBack={handleLogout} />
+        )}
+        {userType === "admin" && adminLogged && (
+          <div className="card">
+            <div className="app-header">
+              <h1>Réservation de salles</h1>
+              <span className="badge-role admin">Administrateur</span>
+              <button
+                className="btn btn-sm"
+                style={{
+                  marginLeft: "auto",
+                  background: "none",
+                  border: "1px solid var(--border)",
+                  color: "var(--text-muted)",
+                }}
+                onClick={handleLogout}
+              >
+                Déconnexion
+              </button>
+            </div>
+            <AdminPanel />
+          </div>
+        )}
+        {userType === "user" && (
+          <div className="card">
+            <div className="app-header">
+              <h1>Réservation de salles</h1>
+              {utilisateurConnecte && (
+                <>
+                  <span className="badge-role user">Utilisateur</span>
+                  <div className="user-info-bar" style={{ marginLeft: "auto" }}>
+                    <strong>{utilisateurConnecte.name}</strong>
+                    <span
+                      style={{ color: "var(--text-muted)", fontSize: "0.8rem" }}
+                    >
+                      {utilisateurConnecte.email}
+                    </span>
+                    <button className="logout-btn" onClick={handleLogout}>
+                      Déconnexion
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
 
-      <Tableau
-        salles={salles}
-        reservation={reservation}
-        utilisateur={utilisateur}
-        setSalles={setSalles}
-        setReservation={setReservation}
-        setUtilisateur={setUtilisateur}
-      />
-      <div style={{ display: "flex", gap: "20px", alignItems: "flex-start" }}>
-        <div
-          style={{
-            flex: 1,
-            padding: "10px",
-            border: "1px solid #ccc",
-            borderRadius: "8px",
-            backgroundColor: "#f9f9f9",
-          }}
-        >
-          <h2>Création de réservation</h2>
-          <ReservationForm
-            salle={salles}
-            setReservation={setReservation}
-            utilisateur={utilisateur}
-            setUtilisateur={setUtilisateur}
-            reservation={reservation}
-          />
-        </div>
-
-        <div
-          style={{
-            flex: 1,
-            padding: "10px",
-            border: "1px solid #ccc",
-            borderRadius: "8px",
-            backgroundColor: "#f9f9f9",
-          }}
-        >
-          <h2>Admin</h2>
-          <AdminPanel
-            salles={salles}
-            reservation={reservation}
-            utilisateur={utilisateur}
-            setSalles={setSalles}
-            setReservation={setReservation}
-            setUtilisateur={setUtilisateur}
-          />
-        </div>
+            {!utilisateurConnecte ? (
+              <NewUtilisateur
+                setUtilisateurConnecte={setUtilisateurConnecte}
+                onBack={handleLogout}
+              />
+            ) : (
+              <ReservationForm utilisateur={utilisateurConnecte} />
+            )}
+          </div>
+        )}
+        <Tableau userType={userType} />
       </div>
-    </div>
+    </ReservationProvider>
   );
 }
 

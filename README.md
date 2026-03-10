@@ -1,70 +1,135 @@
-# Getting Started with Create React App
+# React Room Booking App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Preview
 
-## Available Scripts
+> _(Add screenshots here)_
 
-In the project directory, you can run:
+## Description
 
-### `npm start`
+A full-featured **Room Booking App** built with **React**, demonstrating:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Role-based access control (**Admin** / **User**)
+- Global state management with **Context API**
+- Persistent data with **localStorage**
+- Monthly booking table with **conflict detection**
+- Responsive design — weekly view on mobile
+- Unit tests with **Jest + React Testing Library**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+This project is designed to be **readable and understandable by recruiters** while showing practical React skills across state management, component architecture, and testing.
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Features
 
-### `npm run build`
+- **User login**: Connect with an existing account or create a new one
+- **Room booking**: Reserve a room by slot — morning, afternoon, or full day
+- **Conflict detection**: Displays an error if a slot is already taken
+- **Monthly table**: Color-coded overview 🟢 free / 🔴 reserved, with tooltip showing the booker's name
+- **Mobile view**: Weekly navigation instead of full month
+- **Admin panel**: Full CRUD for users, rooms and reservations
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Tech Stack
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- React 19
+- Hooks: `useState`, `useEffect`, `useContext`
+- Context API for global state
+- localStorage for data persistence
+- Plain CSS with custom properties for theming and responsive layout
+- Jest + React Testing Library for unit tests
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Folder Structure
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+src/
+├── Admin/
+│   ├── AdminPanel.jsx
+│   ├── LoginAdmin.jsx
+│   ├── SupReservation.jsx
+│   ├── SupSalle.jsx
+│   └── SupUtilisateur.jsx
+├── components/
+│   └── Tableau.jsx
+├── Context/
+│   └── ReservationContext.jsx
+├── reservation/
+│   ├── ReservationForm.jsx
+│   └── NewUtilisateur.jsx
+├── styles/
+│   └── App.css
+├── __tests__/
+└── App.jsx
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## How to Run
 
-## Learn More
+1. Clone the repository:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+git clone https://github.com/atteewf/reservationsalle.git
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+2. Install dependencies:
 
-### Code Splitting
+```bash
+npm install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+3. Start the development server:
 
-### Analyzing the Bundle Size
+```bash
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Open http://localhost:3000 in your browser.
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Demo Credentials
 
-### Advanced Configuration
+| Role  | Username                             | Password |
+| ----- | ------------------------------------ | -------- |
+| Admin | `Admin`                              | `1234`   |
+| User  | _(create an account on first visit)_ | —        |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## Tests
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```bash
+npm test
+```
 
-### `npm run build` fails to minify
+| File                 | Tests | What is covered                                              |
+| -------------------- | ----- | ------------------------------------------------------------ |
+| `ReservationContext` | 3     | Add reservation, cascade delete on room removal, slot update |
+| `ReservationForm`    | 3     | Empty fields, successful booking, morning slot conflict      |
+| `getSemaine`         | 2     | Returns 7 days, handles month change                         |
+| `LoginAdmin`         | 2     | Valid credentials, invalid credentials                       |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+## Future Improvements
+
+- Replace localStorage with a real REST API or Firebase
+- Add JWT-based authentication
+- Handle leap years in the booking table
+- Email notifications on new reservations
+
+---
+
+## Author
+
+**Atteewf** – React Developer Portfolio Ready
+
+---
+
+## Contact
+
+LinkedIn: https://www.linkedin.com/in/seb-oll-0188133a4/  
+Email: ateeew@gmail.com
