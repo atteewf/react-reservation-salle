@@ -28,16 +28,6 @@ const SupReservation = () => {
     setMessage(null);
   };
 
-  const handleSelectResa = (e) => {
-    const r = reservation.find((r) => r.id === parseInt(e.target.value));
-    if (!r) {
-      reset();
-      return;
-    }
-    setForm({ ...r });
-    setMessage(null);
-  };
-
   const handleAjouter = (e) => {
     e.preventDefault();
     if (!form.salleId || !form.date) {
