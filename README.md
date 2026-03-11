@@ -2,11 +2,11 @@
 
 ## Preview
 
-![Reservationsalle - page acceuil](https://github.com/user-attachments/assets/3a91a4d8-22c3-4a33-add7-98cd15b9c9b7)
-![Reservationsalle - page connexion Admin](https://github.com/user-attachments/assets/9efdd7a6-7082-4b4e-974a-ad9c2d2c828e)
-![Reservationsalle - page Admin](https://github.com/user-attachments/assets/9d2099bd-1085-4001-b6e8-9285ef9a3d96)
-![Reservationsalle - page utilisateur 1/2](https://github.com/user-attachments/assets/9496e0f1-5651-443d-8ff0-45353a38d8de)
-![Reservationsalle - page utilisateur 2/2](https://github.com/user-attachments/assets/9bdf1217-5570-40cb-8df4-0ea715961b60)
+![react-reservation-salle - page acceuil](https://github.com/user-attachments/assets/3a91a4d8-22c3-4a33-add7-98cd15b9c9b7)
+![react-reservation-salle - page connexion Admin](https://github.com/user-attachments/assets/9efdd7a6-7082-4b4e-974a-ad9c2d2c828e)
+![react-reservation-salle - page Admin](https://github.com/user-attachments/assets/9d2099bd-1085-4001-b6e8-9285ef9a3d96)
+![react-reservation-salle - page utilisateur 1/2](https://github.com/user-attachments/assets/9496e0f1-5651-443d-8ff0-45353a38d8de)
+![react-reservation-salle - page utilisateur 2/2](https://github.com/user-attachments/assets/9bdf1217-5570-40cb-8df4-0ea715961b60)
 
 ## Description
 
@@ -75,7 +75,7 @@ src/
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/atteewf/reservationsalle.git
+git clone https://github.com/atteewf/react-reservation-salle.git
 ```
 
 2. Install dependencies:
