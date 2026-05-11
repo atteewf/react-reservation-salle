@@ -5,9 +5,10 @@ interface Salle {
   name: string;
 }
 interface Reservation {
+  id: number;
   salleId: number;
   date: string;
-  resmatin: boolean;
+  resamatin: boolean;
   resaprem: boolean;
   utilisateurId: number;
 }
@@ -30,7 +31,15 @@ interface ReservationContextType {
 const ReservationContext = createContext<ReservationContextType | undefined>(
   undefined,
 );
-export const useReservation = () => useContext(ReservationContext);
+
+export const useReservation = () => {
+  const context = useContext(ReservationContext);
+  if (!context)
+    throw new Error(
+      "useReservation doit être utilisé dans ReservationProvider",
+    );
+  return context;
+};
 
 export const ReservationProvider = ({
   children,

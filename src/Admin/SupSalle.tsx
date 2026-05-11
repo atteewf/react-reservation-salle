@@ -1,21 +1,29 @@
 import { useState } from "react";
 import { useReservation } from "../Context/ReservationContext";
 
+interface Message {
+  type: string;
+  text: string;
+}
+
 const SupSalle = () => {
   const { salles, setSalles, reservation, setReservation } = useReservation();
-  const [form, setForm] = useState({ id: "", name: "" });
-  const [message, setMessage] = useState(null);
+  const [form, setForm] = useState<{ id: string; name: string }>({
+    id: "",
+    name: "",
+  });
+
+  const [message, setMessage] = useState<Message | null>(null);
 
   const reset = () => setForm({ id: "", name: "" });
 
-  const handleSelect = (e) => {
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const s = salles.find((s) => s.id === parseInt(e.target.value));
-    setForm(s ? { id: s.id, name: s.name } : { id: "", name: "" });
+    setForm(s ? { id: s.id.toString(), name: s.name } : { id: "", name: "" });
     setMessage(null);
   };
 
-  const handleAjouter = (e) => {
-    e.preventDefault();
+  const handleAjouter = () => {
     if (!form.name.trim()) {
       setMessage({ type: "error", text: "Nom requis." });
       return;
@@ -34,8 +42,7 @@ const SupSalle = () => {
     reset();
   };
 
-  const handleModifier = (e) => {
-    e.preventDefault();
+  const handleModifier = () => {
     if (!form.id) {
       setMessage({ type: "error", text: "Sélectionnez une salle." });
       return;
@@ -49,8 +56,7 @@ const SupSalle = () => {
     reset();
   };
 
-  const handleSupprimer = (e) => {
-    e.preventDefault();
+  const handleSupprimer = () => {
     if (!form.id) {
       setMessage({ type: "error", text: "Sélectionnez une salle." });
       return;

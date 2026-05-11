@@ -1,16 +1,26 @@
 import { useState } from "react";
 import { useReservation } from "../Context/ReservationContext";
-
+interface Message {
+  type: string;
+  text: string;
+}
 const SupReservation = () => {
   const { salles, utilisateur, reservation, setReservation } = useReservation();
 
   const [filterSalle, setFilterSalle] = useState("");
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState<Message | null>(null);
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<{
+    id: string;
+    salleId: string;
+    utilisateurId: string;
+    date: string;
+    resamatin: boolean;
+    resaprem: boolean;
+  }>({
     id: "",
-    salleId: salles[0]?.id || "",
-    utilisateurId: utilisateur[0]?.id || "",
+    salleId: salles[0]?.id.toString() || "",
+    utilisateurId: utilisateur[0]?.id.toString() || "",
     date: "",
     resamatin: true,
     resaprem: true,
@@ -19,8 +29,8 @@ const SupReservation = () => {
   const reset = () => {
     setForm({
       id: "",
-      salleId: salles[0]?.id || "",
-      utilisateurId: utilisateur[0]?.id || "",
+      salleId: salles[0]?.id.toString() || "",
+      utilisateurId: utilisateur[0]?.id.toString() || "",
       date: "",
       resamatin: true,
       resaprem: true,
@@ -28,8 +38,7 @@ const SupReservation = () => {
     setMessage(null);
   };
 
-  const handleAjouter = (e) => {
-    e.preventDefault();
+  const handleAjouter = () => {
     if (!form.salleId || !form.date) {
       setMessage({ type: "error", text: "Salle et date requises." });
       return;
@@ -60,8 +69,7 @@ const SupReservation = () => {
     reset();
   };
 
-  const handleModifier = (e) => {
-    e.preventDefault();
+  const handleModifier = () => {
     if (!form.id) {
       setMessage({ type: "error", text: "Sélectionnez une réservation." });
       return;
@@ -84,13 +92,15 @@ const SupReservation = () => {
     reset();
   };
 
-  const handleSupprimer = (id) => {
+  const handleSupprimer = (id: number) => {
     setReservation(reservation.filter((r) => r.id !== id));
     setMessage({ type: "success", text: "Réservation supprimée." });
   };
 
-  const getSalleName = (id) => salles.find((s) => s.id === id)?.name || "?";
-  const getUserName = (id) => utilisateur.find((u) => u.id === id)?.name || "?";
+  const getSalleName = (id: number) =>
+    salles.find((s) => s.id === id)?.name || "?";
+  const getUserName = (id: number) =>
+    utilisateur.find((u) => u.id === id)?.name || "?";
 
   const filtered = filterSalle
     ? reservation.filter((r) => r.salleId === parseInt(filterSalle))
@@ -340,7 +350,14 @@ const SupReservation = () => {
                         padding: "4px 10px",
                         fontSize: "0.75rem",
                       }}
-                      onClick={() => setForm({ ...r })}
+                      onClick={() =>
+                        setForm({
+                          ...r,
+                          id: r.id.toString(),
+                          salleId: r.salleId.toString(),
+                          utilisateurId: r.utilisateurId.toString(),
+                        })
+                      }
                     >
                       ✏️
                     </button>
