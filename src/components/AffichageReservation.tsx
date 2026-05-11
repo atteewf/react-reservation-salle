@@ -1,6 +1,11 @@
 import { useReservation } from "../Context/ReservationContext";
-
-const AffichageReservation = ({ salleId, jour, mois, annee }) => {
+interface AffResaProps {
+  salleId: number;
+  jour: number;
+  mois: number;
+  annee: number;
+}
+const AffichageReservation = ({ salleId, jour, mois, annee }: AffResaProps) => {
   const { reservation } = useReservation();
   const dateStr = `${annee}-${mois.toString().padStart(2, "0")}-${jour.toString().padStart(2, "0")}`;
   const res = reservation.find(
