@@ -1,6 +1,18 @@
 import { useState, useEffect } from "react";
 import { useReservation } from "../Context/ReservationContext";
 
+interface getSemaine {
+  annee: number;
+  mois: number;
+  jourRef: number;
+}
+
+interface CellSlot {
+  label: string;
+  libre: boolean;
+  utilisateurNom: string | null;
+}
+
 const MOIS = [
   { id: 1, label: "Janvier", jours: 31 },
   { id: 2, label: "Février", jours: 28 },
@@ -29,7 +41,7 @@ const useIsMobile = () => {
   return isMobile;
 };
 
-const getSemaine = (annee, mois, jourRef) => {
+const getSemaine = ({ annee, mois, jourRef }: getSemaine) => {
   const date = new Date(annee, mois - 1, jourRef);
   const jourSemaine = (date.getDay() + 6) % 7;
   const lundi = new Date(date);
@@ -45,7 +57,7 @@ const getSemaine = (annee, mois, jourRef) => {
   });
 };
 
-const CellSlot = ({ label, libre, utilisateurNom }) => (
+const CellSlot = ({ label, libre, utilisateurNom }: CellSlot) => (
   <div
     className={`slot ${libre ? "libre" : "reserve"}`}
     title={
@@ -67,7 +79,12 @@ const Tableau = () => {
 
   const moisInfo = MOIS.find((m) => m.id === mois);
 
-  const getRes = (salleId, jour, moisCible = mois, anneeCible = annee) => {
+  const getRes = (
+    salleId: number,
+    jour: number,
+    moisCible = mois,
+    anneeCible = annee,
+  ) => {
     const dateStr = `${anneeCible}-${moisCible.toString().padStart(2, "0")}-${jour.toString().padStart(2, "0")}`;
     return (
       reservation.find((r) => r.salleId === salleId && r.date === dateStr) ||
@@ -75,12 +92,12 @@ const Tableau = () => {
     );
   };
 
-  const getNomUtil = (utilisateurId) => {
+  const getNomUtil = (utilisateurId: number) => {
     const u = utilisateur.find((u) => u.id === utilisateurId);
     return u ? u.name : "Inconnu";
   };
 
-  const semaine = getSemaine(annee, mois, jourRef);
+  const semaine = getSemaine({ annee, mois, jourRef });
 
   const semainePrecedente = () => {
     const d = new Date(annee, mois - 1, jourRef);
@@ -106,11 +123,11 @@ const Tableau = () => {
     return `${fmtDebut} – ${fmtFin}`;
   };
 
-  const handleMoisChange = (newMois) => {
+  const handleMoisChange = (newMois: number) => {
     setMois(newMois);
     setJourRef(1);
   };
-  const handleAnneeChange = (newAnnee) => {
+  const handleAnneeChange = (newAnnee: number) => {
     setAnnee(newAnnee);
     setJourRef(1);
   };
@@ -232,7 +249,7 @@ const Tableau = () => {
                       </div>
                     </th>
                   ))
-                : Array.from({ length: moisInfo.jours }, (_, i) => (
+                : Array.from({ length: moisInfo?.jours ?? 0 }, (_, i) => (
                     <th key={i + 1} scope="col">
                       {i + 1}
                     </th>
@@ -269,7 +286,7 @@ const Tableau = () => {
                         </td>
                       );
                     })
-                  : Array.from({ length: moisInfo.jours }, (_, i) => {
+                  : Array.from({ length: moisInfo?.jours ?? 0 }, (_, i) => {
                       const res = getRes(s.id, i + 1);
                       const nom = res ? getNomUtil(res.utilisateurId) : null;
                       return (

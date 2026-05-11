@@ -1,6 +1,11 @@
 import React from "react";
 
-const DateInput = ({ value, onChange }) => {
+interface DateInputProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+const DateInput = ({ value, onChange }: DateInputProps) => {
   return (
     <div>
       <label htmlFor="choix_date">Choix de la date de reservation:</label>
