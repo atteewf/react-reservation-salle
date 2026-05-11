@@ -1,26 +1,38 @@
 import { useState } from "react";
 import { useReservation } from "../Context/ReservationContext";
+interface Message {
+  type: string;
+  text: string;
+}
 
+interface FormUtilisateur {
+  id: string;
+  name: string;
+  email: string;
+}
 const SupUtilisateur = () => {
   const { utilisateur, setUtilisateur } = useReservation();
 
-  const [form, setForm] = useState({ id: "", name: "", email: "" });
-  const [message, setMessage] = useState(null);
+  const [form, setForm] = useState<FormUtilisateur>({
+    id: "",
+    name: "",
+    email: "",
+  });
+  const [message, setMessage] = useState<Message | null>(null);
 
   const reset = () => setForm({ id: "", name: "", email: "" });
 
-  const handleSelect = (e) => {
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const u = utilisateur.find((u) => u.id === parseInt(e.target.value));
     setForm(
       u
-        ? { id: u.id, name: u.name, email: u.email }
+        ? { id: u.id.toString(), name: u.name, email: u.email }
         : { id: "", name: "", email: "" },
     );
     setMessage(null);
   };
 
-  const handleAjouter = (e) => {
-    e.preventDefault();
+  const handleAjouter = () => {
     if (!form.name.trim() || !form.email.trim()) {
       setMessage({ type: "error", text: "Nom et email requis." });
       return;
@@ -40,8 +52,7 @@ const SupUtilisateur = () => {
     reset();
   };
 
-  const handleModifier = (e) => {
-    e.preventDefault();
+  const handleModifier = () => {
     if (!form.id) {
       setMessage({ type: "error", text: "Sélectionnez un utilisateur." });
       return;
@@ -57,8 +68,7 @@ const SupUtilisateur = () => {
     reset();
   };
 
-  const handleSupprimer = (e) => {
-    e.preventDefault();
+  const handleSupprimer = () => {
     if (!form.id) {
       setMessage({ type: "error", text: "Sélectionnez un utilisateur." });
       return;
