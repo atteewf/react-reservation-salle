@@ -1,5 +1,10 @@
 # React Room Booking App
 
+![React](https://img.shields.io/badge/React-19-blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue)
+![Tests](https://img.shields.io/badge/Tests-Jest%20%2B%20RTL-green)
+![Responsive](https://img.shields.io/badge/Responsive-Mobile-orange)
+
 ## Preview
 
 ![react-reservation-salle - page acceuil](https://github.com/user-attachments/assets/3a91a4d8-22c3-4a33-add7-98cd15b9c9b7)
@@ -10,7 +15,7 @@
 
 ## Description
 
-A full-featured **Room Booking App** built with **React**, demonstrating:
+A full-featured **Room Booking App** built with **React + TypeScript**, demonstrating:
 
 - Role-based access control (**Admin** / **User**)
 - Global state management with **Context API**
@@ -18,8 +23,9 @@ A full-featured **Room Booking App** built with **React**, demonstrating:
 - Monthly booking table with **conflict detection**
 - Responsive design — weekly view on mobile
 - Unit tests with **Jest + React Testing Library**
+- Type-safe architecture with **TypeScript**
 
-This project is designed to be **readable and understandable by recruiters** while showing practical React skills across state management, component architecture, and testing.
+This project is designed to be **readable and understandable by recruiters** while showcasing practical frontend engineering skills across state management, component architecture, testing, and type safety.
 
 ---
 
@@ -37,6 +43,7 @@ This project is designed to be **readable and understandable by recruiters** whi
 ## Tech Stack
 
 - React 19
+- TypeScript
 - Hooks: `useState`, `useEffect`, `useContext`
 - Context API for global state
 - localStorage for data persistence
@@ -50,22 +57,23 @@ This project is designed to be **readable and understandable by recruiters** whi
 ```
 src/
 ├── Admin/
-│   ├── AdminPanel.jsx
-│   ├── LoginAdmin.jsx
-│   ├── SupReservation.jsx
-│   ├── SupSalle.jsx
-│   └── SupUtilisateur.jsx
+│   ├── AdminPanel.tsx
+│   ├── LoginAdmin.tsx
+│   ├── SupReservation.tsx
+│   ├── SupSalle.tsx
+│   └── SupUtilisateur.tsx
 ├── components/
-│   └── Tableau.jsx
+│   └── Tableau.tsx
 ├── Context/
-│   └── ReservationContext.jsx
+│   └── ReservationContext.tsx
 ├── reservation/
-│   ├── ReservationForm.jsx
-│   └── NewUtilisateur.jsx
+│   ├── ReservationForm.tsx
+│   └── NewUtilisateur.tsx
 ├── styles/
 │   └── App.css
+├── types/
 ├── __tests__/
-└── App.jsx
+└── App.tsx
 ```
 
 ---
@@ -115,6 +123,21 @@ npm test
 | `ReservationForm`    | 3     | Empty fields, successful booking, morning slot conflict      |
 | `getSemaine`         | 2     | Returns 7 days, handles month change                         |
 | `LoginAdmin`         | 2     | Valid credentials, invalid credentials                       |
+
+---
+
+## Key Technical Concepts
+
+- React Context API
+- TypeScript typing
+- State lifting
+- Controlled forms
+- CRUD operations
+- Responsive UI patterns
+- Conditional rendering
+- Data persistence
+- Component composition
+- Unit testing
 
 ---
 
