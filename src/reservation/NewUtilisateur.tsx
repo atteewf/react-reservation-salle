@@ -1,24 +1,36 @@
 import { useState } from "react";
 import { useReservation } from "../Context/ReservationContext";
+interface Utilisateur {
+  id: number;
+  name: string;
+  email: string;
+}
 
-const NewUtilisateur = ({ setUtilisateurConnecte, onBack }) => {
+interface NewUtilisateurProps {
+  setUtilisateurConnecte: (user: Utilisateur | null) => void;
+  onBack: () => void;
+}
+
+const NewUtilisateur = ({
+  setUtilisateurConnecte,
+  onBack,
+}: NewUtilisateurProps) => {
   const { utilisateur, setUtilisateur } = useReservation();
-
-  const [mode, setMode] = useState("choix");
+  const [mode, setMode] = useState<"choix" | "connexion" | "creation">("choix");
 
   const [selectedId, setSelectedId] = useState("");
 
   const [form, setForm] = useState({ name: "", email: "" });
   const [erreur, setErreur] = useState("");
 
-  const handleConnexion = (e) => {
+  const handleConnexion = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!selectedId) return;
     const u = utilisateur.find((u) => u.id === parseInt(selectedId));
     if (u) setUtilisateurConnecte(u);
   };
 
-  const handleCreation = (e) => {
+  const handleCreation = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErreur("");
     if (!form.name.trim() || !form.email.trim()) {
