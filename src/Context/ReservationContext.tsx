@@ -1,10 +1,43 @@
 import { createContext, useContext, useState, useEffect } from "react";
 
-const ReservationContext = createContext();
+interface Salle {
+  id: number;
+  name: string;
+}
+interface Reservation {
+  salleId: number;
+  date: string;
+  resmatin: boolean;
+  resaprem: boolean;
+  utilisateurId: number;
+}
+
+interface Utilisateur {
+  id: number;
+  name: string;
+  email: string;
+}
+
+interface ReservationContextType {
+  salles: Salle[];
+  setSalles: (salles: Salle[]) => void;
+  reservation: Reservation[];
+  setReservation: (reservation: Reservation[]) => void;
+  utilisateur: Utilisateur[];
+  setUtilisateur: (utilisateur: Utilisateur[]) => void;
+}
+
+const ReservationContext = createContext<ReservationContextType | undefined>(
+  undefined,
+);
 export const useReservation = () => useContext(ReservationContext);
 
-export const ReservationProvider = ({ children }) => {
-  const [salles, setSalles] = useState(() => {
+export const ReservationProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  const [salles, setSalles] = useState<Salle[]>(() => {
     const saved = localStorage.getItem("salles");
     return saved
       ? JSON.parse(saved)
@@ -14,12 +47,12 @@ export const ReservationProvider = ({ children }) => {
         ];
   });
 
-  const [reservation, setReservation] = useState(() => {
+  const [reservation, setReservation] = useState<Reservation[]>(() => {
     const saved = localStorage.getItem("reservation");
     return saved ? JSON.parse(saved) : [];
   });
 
-  const [utilisateur, setUtilisateur] = useState(() => {
+  const [utilisateur, setUtilisateur] = useState<Utilisateur[]>(() => {
     const saved = localStorage.getItem("utilisateur");
     return saved ? JSON.parse(saved) : [];
   });

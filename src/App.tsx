@@ -9,9 +9,13 @@ import ReservationForm from "./reservation/ReservationForm";
 import Tableau from "./components/Tableau";
 
 function App() {
-  const [userType, setUserType] = useState(null); // "admin" | "user"
+  const [userType, setUserType] = useState<"admin" | "user" | null>(null); // "admin" | "user"
   const [adminLogged, setAdminLogged] = useState(false);
-  const [utilisateurConnecte, setUtilisateurConnecte] = useState(null); // objet {id, name, email}
+  const [utilisateurConnecte, setUtilisateurConnecte] = useState<{
+    id: Number;
+    name: String;
+    email: String;
+  } | null>(null); // objet {id, name, email}
 
   const handleLogout = () => {
     setUserType(null);
@@ -96,7 +100,7 @@ function App() {
             )}
           </div>
         )}
-        <Tableau userType={userType} />
+        <Tableau />
       </div>
     </ReservationProvider>
   );
