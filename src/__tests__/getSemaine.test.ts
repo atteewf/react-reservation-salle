@@ -1,4 +1,4 @@
-const getSemaine = (annee, mois, jourRef) => {
+const getSemaine = (annee: number, mois: number, jourRef: number) => {
   const date = new Date(annee, mois - 1, jourRef);
   const jourSemaine = (date.getDay() + 6) % 7;
   const lundi = new Date(date);
