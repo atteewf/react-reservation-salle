@@ -1,4 +1,19 @@
-const UtilisateurSelect = ({ utilisateur, value, onChange }) => {
+interface Utilisateur {
+  id: number;
+  name: string;
+}
+
+interface UtilisateurSelectProps {
+  utilisateur: Utilisateur[];
+  value: string;
+  onChange: (value: string) => void;
+}
+
+const UtilisateurSelect = ({
+  utilisateur,
+  value,
+  onChange,
+}: UtilisateurSelectProps) => {
   return (
     <div>
       <label htmlFor="utilisateur_select">Utilisateur :</label>

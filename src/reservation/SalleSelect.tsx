@@ -1,6 +1,17 @@
 import React from "react";
 
-const SalleSelect = ({ salle, value, onChange }) => {
+interface Salle {
+  id: number;
+  name: string;
+}
+
+interface SalleSelectProps {
+  salle: Salle[];
+  value: string;
+  onChange: (value: string) => void;
+}
+
+const SalleSelect = ({ salle, value, onChange }: SalleSelectProps) => {
   return (
     <div>
       <label htmlFor="salle_select">Salle :</label>

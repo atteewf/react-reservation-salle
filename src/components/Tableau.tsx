@@ -1,12 +1,6 @@
 import { useState, useEffect } from "react";
 import { useReservation } from "../Context/ReservationContext";
 
-interface getSemaine {
-  annee: number;
-  mois: number;
-  jourRef: number;
-}
-
 interface CellSlot {
   label: string;
   libre: boolean;
@@ -41,7 +35,7 @@ const useIsMobile = () => {
   return isMobile;
 };
 
-const getSemaine = ({ annee, mois, jourRef }: getSemaine) => {
+const getSemaine = (annee: number, mois: number, jourRef: number) => {
   const date = new Date(annee, mois - 1, jourRef);
   const jourSemaine = (date.getDay() + 6) % 7;
   const lundi = new Date(date);
@@ -97,7 +91,7 @@ const Tableau = () => {
     return u ? u.name : "Inconnu";
   };
 
-  const semaine = getSemaine({ annee, mois, jourRef });
+  const semaine = getSemaine(annee, mois, jourRef);
 
   const semainePrecedente = () => {
     const d = new Date(annee, mois - 1, jourRef);

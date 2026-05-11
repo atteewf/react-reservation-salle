@@ -12,11 +12,10 @@ function App() {
   const [userType, setUserType] = useState<"admin" | "user" | null>(null); // "admin" | "user"
   const [adminLogged, setAdminLogged] = useState(false);
   const [utilisateurConnecte, setUtilisateurConnecte] = useState<{
-    id: Number;
-    name: String;
-    email: String;
-  } | null>(null); // objet {id, name, email}
-
+    id: number;
+    name: string;
+    email: string;
+  } | null>(null);
   const handleLogout = () => {
     setUserType(null);
     setAdminLogged(false);

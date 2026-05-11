@@ -1,6 +1,11 @@
 import React from "react";
 
-const SlotSelector = ({ value, onChange }) => {
+interface SlotSelectorProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+const SlotSelector = ({ value, onChange }: SlotSelectorProps) => {
   return (
     <div>
       <label htmlFor="creneau_select">Choisissez le creneau&nbsp;:</label>

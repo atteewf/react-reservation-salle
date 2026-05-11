@@ -1,15 +1,28 @@
 import { useState } from "react";
 import { useReservation } from "../Context/ReservationContext";
+interface Utilisateur {
+  id: number;
+  name: string;
+  email: string;
+}
+interface ReservationFormProps {
+  utilisateur: Utilisateur;
+}
 
-const ReservationForm = ({ utilisateur }) => {
+interface Message {
+  type: string;
+  text: string;
+}
+
+const ReservationForm = ({ utilisateur }: ReservationFormProps) => {
   const { salles, reservation, setReservation } = useReservation();
 
-  const [salleId, setSalleId] = useState(salles[0]?.id || "");
+  const [salleId, setSalleId] = useState<string>(String(salles[0]?.id || ""));
   const [date, setDate] = useState("");
   const [creneau, setCreneau] = useState("");
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState<Message | null>(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setMessage(null);
 

@@ -13,5 +13,8 @@
     "isolatedModules": true,
     "noEmit": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "eslintConfig": {
+    "extends": ["react-app"]
+  }
 }
