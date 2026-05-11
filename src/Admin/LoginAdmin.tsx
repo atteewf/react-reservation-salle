@@ -1,11 +1,16 @@
 import { useState } from "react";
 
-const LoginAdmin = ({ setAdminLogged, onBack }) => {
+interface LoginAdminProps {
+  setAdminLogged: (value: boolean) => void;
+  onBack: () => void;
+}
+
+const LoginAdmin = ({ setAdminLogged, onBack }: LoginAdminProps) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [erreur, setErreur] = useState("");
 
-  const handleLogin = (e) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (username === "Admin" && password === "1234") {
       setAdminLogged(true);
